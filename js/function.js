@@ -25,8 +25,21 @@ function debugTool(obj, obj2){
 		//controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
 		obj.orbit.enableDamping = true;
 		obj.orbit.dampingFactor = 0.25;
-		obj.orbit.enableZoom = false;
+		obj.orbit.enableZoom = true;
 		consol(obj, "orbitControl :: active")
 	
 	}
+}
+// ync position of geometry and body
+function syncBodyPos(obj, objBody){
+	objBody.position.copy(obj.position);
+}
+// physic
+function detectCollide(obj){
+	obj.addEventListener("collide",function(e){
+        var contact = e.contact;
+        if (e.contact){
+          jumpy = true;
+        }
+    });
 }

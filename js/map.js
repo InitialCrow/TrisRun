@@ -9,9 +9,9 @@
 		},
 		skyBox : {
 
-			assets : ['../assets/skybox/matrix/matrixlf.bmp','../assets/skybox/matrix/matrixrt.bmp',
-					'../assets/skybox/matrix/matrixdn.bmp','../assets/skybox/matrix/matrixup.bmp',
-					'../assets/skybox/matrix/matrixdn.bmp', '../assets/skybox/matrix/matrixup.bmp'],
+			assets : ['../assets/skybox/grid_ft.jpg','../assets/skybox/grid_ft.jpg',
+					'../assets/skybox/grid_ft.jpg','../assets/skybox/grid_ft.jpg',
+					'../assets/skybox/grid_ft.jpg', '../assets/skybox/grid_ft.jpg'],
 			material : [],
 			geometry :  new THREE.BoxGeometry(1900,1900,1900,1,1,1,null,true),
 			loader : new THREE.TextureLoader(),
@@ -27,7 +27,6 @@
 
 						self.skyBox.materials = new THREE.MeshBasicMaterial({map:image, side: THREE.BackSide});
              					self.skyBox.material.push(self.skyBox.materials);
-
              					self.skyBox.materialFinal = new THREE.MeshFaceMaterial(self.skyBox.material);
              					self.skyBox.box = new THREE.Mesh(self.skyBox.geometry, self.skyBox.materialFinal);
 
@@ -53,6 +52,8 @@
 			geometry : new THREE.BoxGeometry( 15, 1, 500 ) ,
 			material : {},
 			mesh :{},
+			shape : {},	
+       		body : {},
 			loader : new THREE.TextureLoader(),
 
 			init : function(){
@@ -68,6 +69,14 @@
 	             				image.repeat.set( 1, 25 );
 						
              					
+             					self.road.shape = new CANNON.Box(new CANNON.Vec3(400,0.1,400));
+								self.road.body = new CANNON.Body({ mass: 0 });
+								self.road.body.addShape(self.road.shape);
+
+								
+								self.road.body.updateMassProperties();
+								trisrun.world.add(self.road.body);
+								
 
              					trisrun.webgl.scene.add(self.road.mesh);
              					self.road.mesh.position.z = -250;
