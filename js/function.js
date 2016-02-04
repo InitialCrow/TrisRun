@@ -1,12 +1,13 @@
 // this for global debug msg
-function consol(obj,msg){
+function consol(obj, msg){
+
 	if (obj.config.debug === true)console.log(msg);
 }
 
 function debugTool(obj, obj2){
 	
-	if (obj.config.debug === true){
-		consol(obj, "============= DEBUG MODE ACTIVE ============")
+	if (obj2.config.debug === true){
+		consol(obj2, "============= DEBUG MODE ACTIVE ============")
 		obj.stats = new Stats();
 		obj.stats.setMode( 0 ); // 0: fps, 1: ms, 2: mb
 
@@ -16,23 +17,27 @@ function debugTool(obj, obj2){
 		obj.stats.domElement.style.top = '0px';
 
 		document.body.appendChild( obj.stats.domElement );
-		consol(obj, "stats :: active")
+		consol(obj2, "stats :: active")
 
 		obj.trident = new THREE.AxisHelper(5);
-		obj2.scene.add(obj.trident);
+		obj.scene.add(obj.trident);
 
-		obj.orbit = new THREE.OrbitControls( obj2.camera, obj2.renderer.domElement );
+		obj.orbit = new THREE.OrbitControls( obj.camera, obj.renderer.domElement );
 		//controls.addEventListener( 'change', render ); // add this only if there is no animation loop (requestAnimationFrame)
 		obj.orbit.enableDamping = true;
 		obj.orbit.dampingFactor = 0.25;
 		obj.orbit.enableZoom = true;
-		consol(obj, "orbitControl :: active")
+		consol(obj2, "orbitControl :: active")
 	
 	}
 }
+
+
+
 // ync position of geometry and body
-function syncBodyPos(obj, objBody){
-	objBody.position.copy(obj.position);
+function initPos(obj, objBody){
+	objBody.position = obj.position;
+
 }
 // physic
 function detectCollide(obj){
