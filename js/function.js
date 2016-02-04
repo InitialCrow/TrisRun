@@ -48,3 +48,8 @@ function detectCollide(obj){
         }
     });
 }
+
+function controls(controller, obj){
+	
+
+}

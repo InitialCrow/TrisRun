@@ -21,7 +21,8 @@ Road.prototype.init = function(scene, world) {
  			self.shape = new CANNON.Box(new CANNON.Vec3(self.w/2, self.h/2, self.d/2));
 			self.body = new CANNON.Body({ mass: 0});
 			self.body.addShape(self.shape);
-			self.body.updateMassProperties();
+			self.body.fixedRotation = true;
+				
 			self.body.position = self.mesh.position;
 			world.add(self.body);
  			scene.add(self.mesh);

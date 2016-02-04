@@ -16,6 +16,7 @@
 
 			this.renderer = new THREE.WebGLRenderer();
 			this.renderer.setSize( window.innerWidth, window.innerHeight );
+		
 			document.body.style.margin = 0;
 			document.body.style.overflow = 'hidden';
 			document.body.appendChild( this.renderer.domElement );

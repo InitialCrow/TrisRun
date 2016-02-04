@@ -1,0 +1,10 @@
+#ui-box{
+	position: absolute;
+	z-index: 22;
+	top : 0;
+	right : 0;
+	background-color: red;
+}
+.tool{
+	margin-right: 5px;
+}

@@ -24,19 +24,29 @@
 			requestAnimationFrame(trisrun.update);
 			
 			if (trisrun.config.debug === true){
+
 				trisrun.webgl.stats.begin();
-				
-      				trisrun.physic.world.step(1/60);
+
+				trisrun.physic.world.step(1/60);
 				if (trisrun.player.mesh !== undefined){
 
-					trisrun.gameEngine.run(trisrun.map.road1.mesh, trisrun.map.road2.mesh, 2);
+					
+					trisrun.gameEngine.animate();
 
 				}
+      		
+
 				
 				trisrun.webgl.stats.end()
 			}
 			else{
+						trisrun.physic.world.step(1/60);
+				if (trisrun.player.mesh !== undefined){
 
+					
+					trisrun.gameEngine.animate();
+
+				}
 			}
 
 			trisrun.webgl.renderer.render(trisrun.webgl.scene, trisrun.webgl.camera);
