@@ -1,4 +1,18 @@
-#ui-box{
+#ui-box1{
+	position: absolute;
+	z-index: 22;
+	top : 0;
+	right : 0;
+	background-color: red;
+}
+#ui-box2{
+	position: absolute;
+	z-index: 22;
+	top : 0;
+	right : 0;
+	background-color: red;
+}
+#ui-box3{
 	position: absolute;
 	z-index: 22;
 	top : 0;

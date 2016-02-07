@@ -18,12 +18,14 @@ Road.prototype.init = function(scene, world) {
      			image.wrapS = THREE.RepeatWrapping;
      			image.wrapT = THREE.RepeatWrapping;
      			image.repeat.set( 1, 25 );
- 			self.shape = new CANNON.Box(new CANNON.Vec3(self.w/2, self.h/2, self.d/2));
+ 			self.shape = new CANNON.Box(new CANNON.Vec3(self.w/2,self.h/2, self.d/2));
 			self.body = new CANNON.Body({ mass: 0});
 			self.body.addShape(self.shape);
 			self.body.fixedRotation = true;
+			
+			
 				
-			self.body.position = self.mesh.position;
+	
 			world.add(self.body);
  			scene.add(self.mesh);
  					

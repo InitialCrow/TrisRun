@@ -6,7 +6,7 @@
 			this.world = new CANNON.World(),
 			this.world.broadphase = new CANNON.NaiveBroadphase();
 			this.world.broadphase.useBoundingBoxes = true;	
-			this.world.gravity.set(0,-50,0);
+			this.world.gravity.set(0,-20,0);
 		},
 	}
 	var self = physic;

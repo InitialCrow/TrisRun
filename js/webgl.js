@@ -6,7 +6,7 @@
 			
 			this.scene = new THREE.Scene();
 
-			this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000 );
+			this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000000);
 			this.camera.position.set(0, 10, 15);
 			this.light2 = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
 			this.scene.add( this.light2 );
