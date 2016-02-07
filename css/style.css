@@ -22,3 +22,13 @@
 .tool{
 	margin-right: 5px;
 }
+
+#score{
+	text-align: center;
+	font-size: 30px;
+	color: white;
+	font-family: verdana;
+}
+.life{
+	margin-right: 5px;
+}

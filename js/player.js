@@ -3,6 +3,7 @@
 		init : function(){
 			consol(trisrun,"player :: ok");
 			this.load();
+			this.life.init("assets/tools/placeholder.jpg");
 		},
 		assets : "../assets/model/mercury.json",
 		geometry : {},
@@ -50,14 +51,55 @@
 			
 			if ( e.contact ){
 				trisrun.gameEngine.keyboard.jump = false;
-			}
-
-				
-			
+			}	
 		},
-			
+		life : {
+			nbLife : 3,
+			init : function(url){
+				this.life = document.createElement("div");
+				this.life.setAttribute('id',"life")
+				this.life.style.position = 'absolute';
+				
 		
+				this.life.style.width =  window.innerWidth/4 +"px";
+				this.life.style.height = window.innerHeight/6 +"px";
+				this.life.style.backgroundColor = "blue";
+				this.life.style.top =  100+ 'px';
+				this.life.style.left = 0 + 'px';
+				document.body.appendChild(this.life);
+				for (var i = 0; i<this.nbLife; i++){
+					this.life.innerHTML += '<img src=\''+url+'\' alt=\'\' class=\'life\' />';
+					
+				}
+				
+			},
+			updateLife : function(url){
+
+				if (self.mesh.position.y < -5){
+					this.nbLife --;
+					this.elems = document.getElementsByClassName("life");
+					for (var i=0; i<this.elems.length; i++){
+						this.elems[i].style.display ="none";
+					}
+
+
+					console.log(this.elems)
+					
+					for (var i = 0; i<this.nbLife; i++){
+
+						this.life.innerHTML += '<img src=\''+url+'\' alt=\'\' class=\' life '+i+' \' />';
+					
+					}
+					
+				
+					console.log(this.nbLife)
+					self.mesh.position.set(0,15,0);
+								
+				}
+			}	
+		}
 	}
 	var self =player;
 	ctx.player = player;
+
 })(trisrun);

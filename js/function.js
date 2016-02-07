@@ -106,6 +106,8 @@ function patern2_tool1(self){
 	trisrun.map.patern2.wall2.mesh.position.z +=2;
 	if (trisrun.map.patern2.road1.mesh.position.z > 600 ){
 				trisrun.map.patern2.road1.mesh.position.z = -1600
+				trisrun.map.patern2.wall1.mesh.position.z = -1600
+				trisrun.map.patern2.wall2.mesh.position.z = -1600
 				self.tool1.body.position.set(-1000,0,0);
 				self.keyboard.tool1_active = false;
 				

@@ -10,23 +10,30 @@
 			
 
 			this.init();
+			this.score.displayScore();
 		},
-		// run : function(obj1, obj2, speed){
-			
-		// 	obj1.position.z += speed;
-		// 	obj2.position.z += speed;
 
-		// 	if (obj1.position.z > 600 ){
-		// 		obj1.position.z = -1600
-	
-				
-		// 	}
-		// 	if (obj2.position.z > 600 ){
-		// 		obj2.position.z = -1600;
-				
-		// 	}
+		score : {
+			data : 0,
+			text : null,
+			displayScore : function(){
+				this.text = document.createElement("div");
+				this.text.setAttribute('id',"score")
+				this.text.style.position = 'absolute';
+				//text2.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
+				this.text.style.width = window.innerWidth/10+"px";
+				this.text.style.height =  window.innerHeight/15 +"px";
+				this.text.style.backgroundColor = "blue";
+				this.text.style.top =  0+ 'px';
+				this.text.style.left = 200 + 'px';
+				document.body.appendChild(this.text);
 
-		//  },
+			},
+			updateScore : function(){
+				this.data ++;
+				this.text.innerHTML = this.data +"m";
+			}
+		},
 		keyboard: {
 			jump: false,
 			left:false,
@@ -80,32 +87,15 @@
 		}),
 		tool1 : new Road(20,1,100,-1000,0,-20,"../assets/road1.jpg"),
 		animate : function(){
-			
+			this.score.updateScore();
+			trisrun.player.life.updateLife("assets/tools/placeholder.jpg");
 			this.switchPatern();
 			
-				initPos(trisrun.map.patern1.road1.mesh, trisrun.map.patern1.road1.body);
-				initPos(trisrun.map.patern1.road2.mesh, trisrun.map.patern1.road2.body);
-				initPos(trisrun.gameEngine.tool1.mesh, trisrun.gameEngine.tool1.body);
-
-				initPos(trisrun.player.mesh, trisrun.player.body);
+			initPos(trisrun.player.mesh, trisrun.player.body);	
 
 				// self.run(trisrun.map.patern1.road1.mesh, trisrun.map.patern1.road2.mesh, 2);
 			
-			
-				
-			
-		
-				
-			
-					
-	
-		
-			
-	
-			
 
-			
-			
 			// self.run(trisrun.map.patern2.road1.mesh, trisrun.map.patern2.road2.mesh, 2);
 			// self.run(trisrun.map.patern2.wall1.mesh, trisrun.map.patern2.wall2.mesh, 2);
 			
@@ -139,22 +129,44 @@
 		switchPatern : function(){
 			
 			
-			if ( trisrun.map.patern1.road1.mesh.position.z ==500 && counter <2 ){
-				
-				counter ++;
-				console.log(counter)
-			}
-			if (counter < 2 ){
-				self.ui_patern1.controls();
+			
+			if ( counter < 2){
+				self.ui_patern1.show('ui-box1');
 				self.ui_patern2.hide('ui-box2');
 				self.ui_patern3.hide('ui-box3');
-				// trisrun.map.patern2.destroy();
+
+				if (trisrun.map.patern1.road1 === null){
+					trisrun.map.patern1.init();
+
+					
+				}
+				if (trisrun.map.patern1.road1.mesh != undefined){
+					self.ui_patern1.controls();
+					initPos(trisrun.map.patern1.road1.mesh, trisrun.map.patern1.road1.body);
+					initPos(trisrun.map.patern1.road2.mesh, trisrun.map.patern1.road2.body);
+					initPos(trisrun.gameEngine.tool1.mesh, trisrun.gameEngine.tool1.body);
+
+					
+
+					
+					if ( trisrun.map.patern1.road1.mesh.position.z ==500 && counter <2 ){
+					
+						counter ++;
+						console.log(counter)
+					}
+						
+					
+
+				}
 
 				
 			}
-			if (counter >= 2 ){
+
+			
+			
+			if (counter >= 2 && counter < 4 ){
 				
-				if (trisrun.map.patern2.road1 === undefined){
+				if (trisrun.map.patern2.road1 === null){
 					trisrun.map.patern2.init();
 					
 				}
@@ -184,7 +196,7 @@
 				}	
 			}
 			if (counter >= 4 ){
-				if (trisrun.map.patern3.roadTbl === undefined){
+				if (trisrun.map.patern3.roadTbl === null){
 					trisrun.map.patern3.init();
 					
 				}
@@ -224,16 +236,7 @@
 				
 				trisrun.map.patern3.destroy();
 				counter = -1;
-			}
-		
-			
-			
-			
-		
-			
-
-			
-			
+			}	
 		},
 		
 				
