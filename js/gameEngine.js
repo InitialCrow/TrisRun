@@ -1,5 +1,5 @@
 (function(ctx){
-	var counter = 0;
+	var counter = 2;
 	
 	var gameEngine = {
 		
@@ -11,6 +11,9 @@
 
 			this.init();
 			this.score.displayScore();
+		},
+		gameOver : function(){
+			// document.location ='trisrun.html';
 		},
 
 		score : {
@@ -39,11 +42,19 @@
 			left:false,
 			right : false,
 			tool1_active : false,
+			tool2_active : false,
+			tool3_active : false,
 			tool1 : false,
+			tool2:false,
+			tool3:false,
 
 			keydown : function(event){
 				
 				switch(event.keyCode){
+					case 40 : self.keyboard.tool2 = true;
+					break;
+					case 38 : self.keyboard.tool3 = true;
+					break;
 					case 32 : self.keyboard.jump = true;
 					break;
 					case 37 : 
@@ -58,6 +69,10 @@
 			keyup : function(event){
 				
 				switch(event.keyCode){
+					case 40 : self.keyboard.tool2 = false;
+					break;
+					case 38 : self.keyboard.tool3 = false;
+					break;
 					case 37 : self.keyboard.tool1 = false;
 					break;
 					case 81 : self.keyboard.left = false;
@@ -86,9 +101,11 @@
 				
 		}),
 		tool1 : new Road(20,1,100,-1000,0,-20,"../assets/road1.jpg"),
+		tool2 : new Road(20,1,100,0,0,-2150,"../assets/road1.jpg"),
+		tool3 : new Road(20,1,100,0,-20,-4250,"../assets/road1.jpg"),
 		animate : function(){
 			this.score.updateScore();
-			trisrun.player.life.updateLife("assets/tools/placeholder.jpg");
+			trisrun.player.life.updateLife("assets/heart1.png");
 			this.switchPatern();
 			
 			initPos(trisrun.player.mesh, trisrun.player.body);	
@@ -116,11 +133,14 @@
 				trisrun.player.mesh.position.x +=0.5;
 				
 			}
-			if(self.keyboard.jump === true){
+			if (trisrun.map.patern3.roadTbl != null){
+				if(self.keyboard.jump === true){
 				
-				trisrun.player.mesh.position.y +=0.2;
+					trisrun.player.mesh.position.y +=0.2;
 				
-			}	
+				}	
+			}
+			
 			else{
 				trisrun.player.mesh.position.x = trisrun.player.mesh.position.x;
 			}
@@ -142,14 +162,23 @@
 				}
 				if (trisrun.map.patern1.road1.mesh != undefined){
 					self.ui_patern1.controls();
+
 					initPos(trisrun.map.patern1.road1.mesh, trisrun.map.patern1.road1.body);
 					initPos(trisrun.map.patern1.road2.mesh, trisrun.map.patern1.road2.body);
 					initPos(trisrun.gameEngine.tool1.mesh, trisrun.gameEngine.tool1.body);
+					initPos(trisrun.map.patern1.road3.mesh, trisrun.map.patern1.road3.body);
+					initPos(trisrun.map.patern1.road4.mesh, trisrun.map.patern1.road4.body);
+					
+					initPos(trisrun.gameEngine.tool2.mesh, trisrun.gameEngine.tool2.body);
+					initPos(trisrun.gameEngine.tool3.mesh, trisrun.gameEngine.tool3.body);
+
+
+				
 
 					
 
 					
-					if ( trisrun.map.patern1.road1.mesh.position.z ==500 && counter <2 ){
+					if ( trisrun.map.patern1.road4.mesh.position.z ==600 && counter <2 ){
 					
 						counter ++;
 						console.log(counter)
@@ -168,6 +197,7 @@
 				
 				if (trisrun.map.patern2.road1 === null){
 					trisrun.map.patern2.init();
+					
 					
 				}
 				if (trisrun.map.patern2.road1.mesh != undefined && trisrun.map.patern2.road2.mesh != undefined){
@@ -192,6 +222,7 @@
 									trisrun.map.patern2.obstTbl[i].body.position.z = -600
 							}
 							initPos(trisrun.map.patern2.obstTbl[i].mesh, trisrun.map.patern2.obstTbl[i].body);
+							initPos(trisrun.gameEngine.tool1.mesh, trisrun.gameEngine.tool1.body);
 						}
 				}	
 			}
@@ -213,12 +244,13 @@
 									trisrun.map.patern3.roadTbl[i].body.position.z = -600;
 
 								}
+								initPos(trisrun.gameEngine.tool1.mesh, trisrun.gameEngine.tool1.body);
 								initPos(trisrun.map.patern3.roadTbl[i].mesh, trisrun.map.patern3.roadTbl[i].body);
 							 }
 							
 						}
-						if (trisrun.map.patern3.roadTbl[9].mesh!= undefined){
-							if ( trisrun.map.patern3.roadTbl[9].mesh.position.z ==100 && counter <6 ){
+						if (trisrun.map.patern3.roadTbl[29].mesh!= undefined){
+							if ( trisrun.map.patern3.roadTbl[29].mesh.position.z ==100 && counter <6 ){
 								
 								counter ++;
 								console.log(counter)
@@ -243,6 +275,8 @@
 		
 		init : function(){		
 			this.tool1.init(trisrun.webgl.scene, trisrun.physic.world);
+			this.tool2.init(trisrun.webgl.scene, trisrun.physic.world);
+			this.tool3.init(trisrun.webgl.scene, trisrun.physic.world);
 			
 			this.ui_patern1.init(3, "assets/tools/placeholder.jpg", 'ui-box1');
 			this.ui_patern2.init(2, "assets/tools/placeholder.jpg", 'ui-box2');	

@@ -1,4 +1,4 @@
-function Road(w, h, d, x, y, z, assets ){
+function Obst(w, h, d, x, y, z, assets ){
 	this.w = w || 1;
 	this.h= h || 1;
 	this.d = d ||1;
@@ -7,7 +7,7 @@ function Road(w, h, d, x, y, z, assets ){
 	this.z = z|| 0;
 	this.assets = assets;
 }
-Road.prototype.init = function(scene, world) {
+Obst.prototype.init = function(scene, world) {
 		var self = this;
 		this.loader = new THREE.TextureLoader();
 		this.loader.load(this.assets, function ( image ) {
@@ -25,7 +25,7 @@ Road.prototype.init = function(scene, world) {
 			self.body.fixedRotation = true;
 			self.body.grp = self.grp;
 			self.body.position.set(self.x, self.y, self.z);
-			
+			self.body.addEventListener("collide", trisrun.player.life.looseLife, false);
 
 			
 			
@@ -48,6 +48,3 @@ Road.prototype.init = function(scene, world) {
 		consol(trisrun,"map > road :: ok");
 		
 };
-Road.prototype.grp = function(id) {
-	this.body.grp = id;
-}

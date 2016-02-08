@@ -28,7 +28,7 @@
 				trisrun.webgl.stats.begin();
 
 				trisrun.physic.world.step(1/60);
-				if (trisrun.gameEngine.tool1.mesh != undefined){
+				if (trisrun.player.mesh != undefined){
 
 					
 					trisrun.gameEngine.animate();

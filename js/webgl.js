@@ -23,7 +23,7 @@
 
 			
 			debugTool(this, trisrun);
-
+		
 			consol(trisrun, "==================== COMPONENTS ===================");
 			consol(trisrun, "webgl :: ok")
 				

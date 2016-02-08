@@ -3,7 +3,7 @@
 		init : function(){
 			consol(trisrun,"player :: ok");
 			this.load();
-			this.life.init("assets/tools/placeholder.jpg");
+			this.life.init("assets/heart1.png");
 		},
 		assets : "../assets/model/mercury.json",
 		geometry : {},
@@ -24,18 +24,18 @@
 				
 				self.material = new THREE.MeshFaceMaterial(material);
 				self.mesh = new THREE.Mesh( geometry, self.material );
+				self.mesh.position.set(0, 15,0 );
 		
 				self.mesh.rotation.y += 3;
-				self.shape = new CANNON.Box(new CANNON.Vec3(2,0.1,1));
+				self.shape = new CANNON.Box(new CANNON.Vec3(2,0.5,1));
+			
 				
-				self.mesh.position.y += 15;
-				
-				self.body = new CANNON.Body({ mass: 5000});
+				self.body = new CANNON.Body({ mass: 100});
 				self.body.position.set(self.mesh.position.x,self.mesh.position.y,self.mesh.position.z);
 				
 				self.body.addShape(self.shape);
 				self.body.fixedRotation = true;
-				self.body.updateMassProperties();
+				
 				
 				// initPos(self.cubeTest, self.bodyTest)
 
@@ -43,6 +43,7 @@
 				// trisrun.physic.world.add(self.bodyTest);
 				trisrun.webgl.scene.add(self.mesh);
 				self.body.addEventListener("collide", self.jump, false);
+				
 							
 				
 			});
@@ -75,7 +76,7 @@
 			},
 			updateLife : function(url){
 
-				if (self.mesh.position.y < -5){
+				if (self.mesh.position.y < -40){
 					this.nbLife --;
 					this.elems = document.getElementsByClassName("life");
 					for (var i=0; i<this.elems.length; i++){
@@ -83,7 +84,7 @@
 					}
 
 
-					console.log(this.elems)
+				
 					
 					for (var i = 0; i<this.nbLife; i++){
 
@@ -92,10 +93,20 @@
 					}
 					
 				
-					console.log(this.nbLife)
-					self.mesh.position.set(0,15,0);
-								
+				
+					self.mesh.position.y = 15;			
 				}
+				if (this.nbLife ===0){
+					trisrun.gameEngine.gameOver();
+				}
+			},
+			looseLife : function(e){
+				
+				if ( e.contact ){
+					trisrun.gameEngine.gameOver();
+				}
+				
+				
 			}	
 		}
 	}
