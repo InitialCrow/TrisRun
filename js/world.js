@@ -1,6 +1,5 @@
 (function(ctx){
 	var physic = {
-		
 		initPhysic : function(){
 			consol(trisrun, "physic :: ok");
 			this.world = new CANNON.World(),

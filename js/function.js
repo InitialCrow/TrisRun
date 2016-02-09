@@ -32,20 +32,13 @@ function debugTool(obj, obj2){
 	}
 }
 
-
-
-// ync position of geometry and body
+// sync position of geometry and body
 function initPos(obj, objBody){
 	objBody.position = obj.position;
-
 }
+
 // physic
 
-
-function controls(controller, obj){
-	
-
-}
 function debugBody(obj, shape, scene, body){
 	obj.geometryDebug = new THREE.BoxGeometry( shape.halfExtents.x, shape.halfExtents.y, shape.halfExtents.z );
 	obj.materialDebug = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
@@ -55,7 +48,7 @@ function debugBody(obj, shape, scene, body){
 }
 
 //patern1
-function patern1_tool1(self){
+function patern1_tool1(self){// need to be refactored ...
 	trisrun.map.patern1.road1.mesh.position.z +=2;
 	trisrun.map.patern1.road2.mesh.position.z +=2;
 	trisrun.map.patern1.road3.mesh.position.z +=2;
@@ -63,194 +56,182 @@ function patern1_tool1(self){
 	trisrun.map.patern1.wall.mesh.position.z +=2;
 	trisrun.gameEngine.tool2.mesh.position.z +=2;
 	trisrun.gameEngine.tool3.mesh.position.z +=2;
+	self.tool3.mesh.position.x = 0;
 
 	if (trisrun.map.patern1.road1.mesh.position.z > 600 ){
-				trisrun.map.patern1.road1.mesh.position.z = -3700
-				self.tool1.body.position.set(-1000,0,0);
-				self.keyboard.tool1_active = false;
+		trisrun.map.patern1.road1.mesh.position.z = -3700
+		self.tool1.body.position.set(-1000,0,0);
+		
+		self.keyboard.tool1_active = false;
 				
-			}
+	}
 	if (trisrun.map.patern1.road2.mesh.position.z > 600 ){
-				trisrun.map.patern1.road2.mesh.position.z = -3700;
-				self.tool1.body.position.set(-1000,0,0);
-				self.keyboard.tool1_active = false;
+		trisrun.map.patern1.road2.mesh.position.z = -3700;
+		self.tool1.body.position.set(-1000,0,0);
+		self.keyboard.tool1_active = false;
 	}
 	if (trisrun.map.patern1.road3.mesh.position.z > 600 ){
-				trisrun.map.patern1.road3.mesh.position.z = -3700
-				self.tool1.body.position.set(-1000,0,0);
-				self.keyboard.tool1_active = false;
-				
-				
-			}
+		trisrun.map.patern1.road3.mesh.position.z = -3700
+		self.tool1.body.position.set(-1000,0,0);
+		self.keyboard.tool1_active = false;
+		self.keyboard.tool2_active = false
+	}
 	if (trisrun.map.patern1.road4.mesh.position.z > 600 ){
-				trisrun.map.patern1.road4.mesh.position.z = -3700;
-				trisrun.map.patern1.wall.mesh.position.z = -2200;
-				self.tool3.body.position.set(0,-20,-4250)
-				self.keyboard.tool3_active = false;
-				self.tool2.body.position.set(0,0,-2150)
-				self.keyboard.tool2_active = false;
-	}
-	if( self.tool3.mesh.position.z > trisrun.player.mesh.position.z){
+		trisrun.map.patern1.road4.mesh.position.z = -3700;
+		trisrun.map.patern1.wall.mesh.position.z = -2200;
+		self.tool3.body.position.set(0,-20,-4250)
 		self.keyboard.tool3_active = false;
+		self.tool2.body.position.set(0,0,-2150)
+		self.keyboard.tool2_active = false;
 	}
 
+	if( self.tool3.mesh.position.z > trisrun.player.mesh.position.z+20){
+		self.keyboard.tool2_active = false
+		self.keyboard.tool3_active = false;
 
+	}
 	if(self.keyboard.tool1 === true  && (trisrun.map.patern1.road1.mesh.position.z >450 || trisrun.map.patern1.road3.mesh.position.z >450)  ){
-				self.keyboard.tool1_active = true;
+		self.feedbacks.niceTiming();
+		self.keyboard.tool1_active = true;
+		self.ui_patern1.bordering('box1_0');
+
 					
+	}
+	else if(self.keyboard.tool1===true && trisrun.map.patern1.road1.mesh.position.z <450 &&self.keyboard.tool1_active === false ){
+		self.feedbacks.badTiming();
+		self.ui_patern1.bordering('box1_0');
+	}
+	if ( self.keyboard.tool1_active === true && trisrun.map.patern1.road1.mesh.position.z > trisrun.map.patern1.road2.mesh.position.z ){
+		self.tool1.mesh.position.x +=50;
+		self.tool1.mesh.position.y = 0;
+		self.tool1.mesh.position.z = trisrun.map.patern1.road1.mesh.position.z-552;
+		if (self.tool1.mesh.position.x >0){
+			self.tool1.mesh.position.x = 0;
+			self.tool1.mesh.position.z += 2;
+
+		}
+	}	
+	if ( self.keyboard.tool1_active === true && trisrun.map.patern1.road2.mesh.position.z < trisrun.map.patern1.road3.mesh.position.z ){
+			self.tool1.mesh.position.x +=50;
+			self.tool1.mesh.position.y = -20;
+			self.tool1.mesh.position.z = trisrun.map.patern1.road3.mesh.position.z-552;
+			if (self.tool1.mesh.position.x >0){
+				self.tool1.mesh.position.x = 0;
+				self.tool1.mesh.position.z += 2;
 			}
-			else if(self.keyboard.tool1===true && trisrun.map.patern1.road1.mesh.position.z <450 &&self.keyboard.tool1_active === false ){
-				console.log("'BAD TIMING")
-				
-			}
-			if ( self.keyboard.tool1_active === true && trisrun.map.patern1.road1.mesh.position.z > trisrun.map.patern1.road2.mesh.position.z ){
-					self.tool1.mesh.position.x +=50;
-					self.tool1.mesh.position.y = 0;
-					 self.tool1.mesh.position.z = trisrun.map.patern1.road1.mesh.position.z-552;
-					if (self.tool1.mesh.position.x >0){
-						self.tool1.mesh.position.x = 0;
-						self.tool1.mesh.position.z += 2;
-					}
-			}
+	}
+
+	if(self.keyboard.tool2 === true  && ( trisrun.map.patern1.road2.mesh.position.z >400)  ){
+		self.keyboard.tool2_active = true;
+		self.feedbacks.niceTiming();
+		self.ui_patern1.bordering('box1_1');
+
 			
-			if ( self.keyboard.tool1_active === true && trisrun.map.patern1.road2.mesh.position.z < trisrun.map.patern1.road3.mesh.position.z ){
-					self.tool1.mesh.position.x +=50;
-					self.tool1.mesh.position.y = -20;
-					 self.tool1.mesh.position.z = trisrun.map.patern1.road3.mesh.position.z-552;
-					if (self.tool1.mesh.position.x >0){
-						self.tool1.mesh.position.x = 0;
-						self.tool1.mesh.position.z += 2;
-					}
+	}
+	else if(self.keyboard.tool2===true && trisrun.map.patern1.road1.mesh.position.z <450 &&self.keyboard.tool2_active === false ){
+		self.feedbacks.badTiming();
+		self.ui_patern1.bordering('box1_1');
+
+		
+	}
+	if ( self.keyboard.tool2_active === true  ){
+			self.tool2.mesh.position.y -=5;
+			trisrun.player.mesh.position.y -=5;
+			trisrun.webgl.camera.position.y -=5;
+
+			if (self.tool2.mesh.position.y <-20  ){
+				self.tool2.mesh.position.y = -20;
+				trisrun.player.mesh.position.y =-20;
+				trisrun.webgl.camera.position.y =-5;		
 			}
-			
-			
+	}
 
-
-
-
-
-
-
-			if(self.keyboard.tool2 === true  && ( trisrun.map.patern1.road2.mesh.position.z >400)  ){
-				self.keyboard.tool2_active = true;
-					
-			}
-			else if(self.keyboard.tool2===true && trisrun.map.patern1.road1.mesh.position.z <450 &&self.keyboard.tool2_active === false ){
-				console.log("'BAD TIMING")
-				
-			}
-			if ( self.keyboard.tool2_active === true  ){
-					self.tool2.mesh.position.y -=5;
-					
-					
-					if (self.tool2.mesh.position.y <-20){
-						self.tool2.mesh.position.y = -20;
-						
-					}
-			}
-
-
-
-
-
-
-
-			if(self.keyboard.tool3 === true  && ( trisrun.map.patern1.road4.mesh.position.z >400)  ){
-				self.keyboard.tool3_active = true;
-			
-					
-			}
-			else if(self.keyboard.tool3 === true && trisrun.map.patern1.road4.mesh.position.z <450 &&self.keyboard.tool3_active === false ){
-				console.log("'BAD TIMING")
-				
-			}
-			if ( self.keyboard.tool3_active === true  ){
-					self.tool3.mesh.position.y +=2;
-					trisrun.player.mesh.position.y +=2;
-					
-					
-					
-					
-			}
-			
-
-
-
-
-}
-
-function patern2_tool1(self){
-
+	if(self.keyboard.tool3 === true  && ( trisrun.map.patern1.road4.mesh.position.z >400)  ){
+		self.keyboard.tool3_active = true;
+		self.feedbacks.niceTiming();
+		self.ui_patern1.bordering('box1_2');
 	
+	}
+	else if(self.keyboard.tool3 === true && trisrun.map.patern1.road4.mesh.position.z <450 &&self.keyboard.tool3_active === false ){
+		self.feedbacks.badTiming();
+		self.ui_patern1.bordering('box1_2');
+
+	}
+	if ( self.keyboard.tool3_active === true  ){
+			self.tool3.mesh.position.y +=2;
+			trisrun.player.mesh.position.y +=2;
+			trisrun.webgl.camera.position.y +=0.8;		
+	}
+}
+//patern2
+function patern2_tool1(self){// need to be refactored ...
+
+	// self.ui_patern2.bordering('tool0');
 	trisrun.map.patern2.road1.mesh.position.z +=2;
 	trisrun.map.patern2.road2.mesh.position.z +=2;
 	trisrun.map.patern2.wall1.mesh.position.z +=2;
 	trisrun.map.patern2.wall2.mesh.position.z +=2;
+	self.tool3.mesh.position.x = -1000;
 	if (trisrun.map.patern2.road1.mesh.position.z > 600 ){
-				trisrun.map.patern2.road1.mesh.position.z = -1600
-				trisrun.map.patern2.wall1.mesh.position.z = -1600
-				trisrun.map.patern2.wall2.mesh.position.z = -1600
-				self.tool1.body.position.set(-1000,0,0);
-				self.keyboard.tool1_active = false;
-				
-			}
+		trisrun.map.patern2.road1.mesh.position.z = -1600
+		trisrun.map.patern2.wall1.mesh.position.z = -1600
+		trisrun.map.patern2.wall2.mesh.position.z = -1600
+		self.tool1.body.position.set(-1000,0,0);
+		self.keyboard.tool1_active = false;
+		
+	}
 	if (trisrun.map.patern2.road2.mesh.position.z > 600 ){
-				trisrun.map.patern2.road2.mesh.position.z = -1600;
-				self.tool1.body.position.set(-1000,0,0);
-				self.keyboard.tool1_active = false;
+		trisrun.map.patern2.road2.mesh.position.z = -1600;
+		self.tool1.body.position.set(-1000,0,0);
+		self.keyboard.tool1_active = false;
 	}
 	if(self.keyboard.tool1 === true  && (trisrun.map.patern2.road1.mesh.position.z >450 || trisrun.map.patern2.road2.mesh.position.z >450)  ){
-				self.keyboard.tool1_active = true;
-					
-			}
-			else if(self.keyboard.tool1===true && trisrun.map.patern2.road1.mesh.position.z <450 &&self.keyboard.tool1_active === false ){
-				console.log("'BAD TIMING")
-				
-			}
-			if ( self.keyboard.tool1_active === true && trisrun.map.patern2.road1.mesh.position.z > trisrun.map.patern2.road2.mesh.position.z ){
-					self.tool1.mesh.position.x +=50;
-					self.tool1.mesh.position.y = 0;
-					 self.tool1.mesh.position.z = trisrun.map.patern2.road1.mesh.position.z-552;
-					if (self.tool1.mesh.position.x >0){
-						self.tool1.mesh.position.x = 0;
-						self.tool1.mesh.position.z += 2;
-					}
-			}
-			if ( self.keyboard.tool1_active === true && trisrun.map.patern2.road1.mesh.position.z < trisrun.map.patern2.road2.mesh.position.z ){
-					self.tool1.mesh.position.x +=50;
-					self.tool1.mesh.position.y = 0;
-					 self.tool1.mesh.position.z = trisrun.map.patern2.road2.mesh.position.z-552;
-					if (self.tool1.mesh.position.x >0){
-						self.tool1.mesh.position.x = 0;
-						self.tool1.mesh.position.z += 2;
-					}
-			}
-}
-
-function patern3_tool1(self){
-	
-
-	if(self.keyboard.tool1 === true && self.keyboard.jump === true ){
 		self.keyboard.tool1_active = true;
-		
+		self.feedbacks.niceTiming();
+		self.ui_patern2.bordering('box2_0');
+
+			
+	}
+	else if(self.keyboard.tool1===true && trisrun.map.patern2.road1.mesh.position.z <450 &&self.keyboard.tool1_active === false ){
+		self.feedbacks.badTiming();
+		self.ui_patern2.bordering('box2_0');
 		
 	}
+	if ( self.keyboard.tool1_active === true && trisrun.map.patern2.road1.mesh.position.z > trisrun.map.patern2.road2.mesh.position.z ){
+		self.tool1.mesh.position.x +=50;
+		self.tool1.mesh.position.y = 0;
+		 self.tool1.mesh.position.z = trisrun.map.patern2.road1.mesh.position.z-552;
+		if (self.tool1.mesh.position.x >0){
+			self.tool1.mesh.position.x = 0;
+			self.tool1.mesh.position.z += 2;
+		}
+	}
+	if ( self.keyboard.tool1_active === true && trisrun.map.patern2.road1.mesh.position.z < trisrun.map.patern2.road2.mesh.position.z ){
+		self.tool1.mesh.position.x +=50;
+		self.tool1.mesh.position.y = 0;
+		 self.tool1.mesh.position.z = trisrun.map.patern2.road2.mesh.position.z-552;
+		if (self.tool1.mesh.position.x >0){
+			self.tool1.mesh.position.x = 0;
+			self.tool1.mesh.position.z += 2;
+		}
+	}
+}
+//patern3
+function patern3_tool1(self){ // need to be refactored ...
+	if(self.keyboard.tool1 === true && self.keyboard.jump === true  ){	
+		self.keyboard.tool1_active = true;
+		self.ui_patern3.bordering('box3_0');
+	
+	}	
 	if (self.keyboard.tool1_active === true  ){
 		self.tool1.mesh.position.x +=50;
 		self.tool1.mesh.position.y = 0;
-		
 		if (self.tool1.mesh.position.x >0){
+			
 			self.tool1.mesh.position.x =0;
 			self.tool1.mesh.position.z+=1;
 
-			
 		}
-		
-	
-			
-			
-		
-		
 	}
 	if (self.tool1.mesh != undefined){
 		if (self.tool1.mesh.position.z > 100 ){
@@ -259,6 +240,5 @@ function patern3_tool1(self){
 			self.keyboard.tool1_active = false;
 				
 		}
-	}
-	
+	}	
 }

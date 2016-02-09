@@ -8,48 +8,29 @@
 		assets : "../assets/model/mercury.json",
 		geometry : {},
 		material : {},
-		
 		shape : {},	
       		body : {},
-	
 		load : function(){
 			this.loader = new THREE.JSONLoader();
 			this.loader.load( this.assets, function(geometry, material){
-				// self.geometryTest = new THREE.BoxGeometry( 1, 1, 1 );
-				// self.materialTest = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-				// self.cubeTest = new THREE.Mesh( self.geometryTest, self.materialTest );
-				// self.shapeTest = new CANNON.Box(new CANNON.Vec3(0.5,0.5,0.5));
-				// self.bodyTest = new CANNON.Body({ mass: 50 });
-				// self.bodyTest.addShape(self.shapeTest);
 				
 				self.material = new THREE.MeshFaceMaterial(material);
+				
 				self.mesh = new THREE.Mesh( geometry, self.material );
 				self.mesh.position.set(0, 15,0 );
-		
 				self.mesh.rotation.y += 3;
-				self.shape = new CANNON.Box(new CANNON.Vec3(2,0.5,1));
-			
 				
+				self.shape = new CANNON.Box(new CANNON.Vec3(2,0.5,1));
 				self.body = new CANNON.Body({ mass: 100});
 				self.body.position.set(self.mesh.position.x,self.mesh.position.y,self.mesh.position.z);
-				
 				self.body.addShape(self.shape);
 				self.body.fixedRotation = true;
-				
-				
-				// initPos(self.cubeTest, self.bodyTest)
-
 				trisrun.physic.world.add(self.body);
-				// trisrun.physic.world.add(self.bodyTest);
 				trisrun.webgl.scene.add(self.mesh);
 				self.body.addEventListener("collide", self.jump, false);
-				
-							
-				
 			});
 		},
 		jump : function(e){
-			
 			if ( e.contact ){
 				trisrun.gameEngine.keyboard.jump = false;
 			}	
@@ -60,40 +41,28 @@
 				this.life = document.createElement("div");
 				this.life.setAttribute('id',"life")
 				this.life.style.position = 'absolute';
-				
-		
 				this.life.style.width =  window.innerWidth/4 +"px";
 				this.life.style.height = window.innerHeight/6 +"px";
-				this.life.style.backgroundColor = "blue";
 				this.life.style.top =  100+ 'px';
 				this.life.style.left = 0 + 'px';
 				document.body.appendChild(this.life);
 				for (var i = 0; i<this.nbLife; i++){
 					this.life.innerHTML += '<img src=\''+url+'\' alt=\'\' class=\'life\' />';
 					
-				}
-				
+				}	
 			},
 			updateLife : function(url){
-
 				if (self.mesh.position.y < -40){
 					this.nbLife --;
 					this.elems = document.getElementsByClassName("life");
 					for (var i=0; i<this.elems.length; i++){
 						this.elems[i].style.display ="none";
 					}
-
-
-				
-					
 					for (var i = 0; i<this.nbLife; i++){
 
 						this.life.innerHTML += '<img src=\''+url+'\' alt=\'\' class=\' life '+i+' \' />';
 					
 					}
-					
-				
-				
 					self.mesh.position.y = 15;			
 				}
 				if (this.nbLife ===0){
@@ -105,8 +74,6 @@
 				if ( e.contact ){
 					trisrun.gameEngine.gameOver();
 				}
-				
-				
 			}	
 		}
 	}

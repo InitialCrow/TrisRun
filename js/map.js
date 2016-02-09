@@ -3,11 +3,10 @@
 		init : function(){
 			consol(trisrun,"map :: ok");
 			this.skyBox.init();
+			// now we init patern in game engine for statemanager
 			// this.patern1.init();
 			// this.patern2.init();
 			// this.patern3.init();
-			
-
 		},
 		skyBox : {
 			assets : ['../assets/skybox/grid_ft.jpg','../assets/skybox/grid_ft.jpg',
@@ -35,7 +34,7 @@
 						}
 					);	
 				}
-				consol(trisrun,"map > skybox :: ok");	
+			consol(trisrun,"map > skybox :: ok");	
 			}		
 		},
 		patern1:{
@@ -43,17 +42,13 @@
 			road2 : null,
 			road3: null,
 			road4 : null,
-	
-	
 			wall : null,
-	
 			init : function(){
 				this.road1 = new Road(20,1,1000,0,0,-500,"../assets/road2.jpg");
 				this.road2 = new Road(20,1,1000,0,0,-1600,"../assets/road2.jpg");
 				this.road3 = new Road(20,1,1000,0,-20,-2600,"../assets/road2.jpg");
 				this.road4 = new Road(20,1,1000,0,-20,-3700,"../assets/road2.jpg");
-				this.wall = new Road(20,30,20,0,20,-2200,"../assets/road2.jpg");
-				
+				this.wall = new Road(20,30,20,0,5,-2200,"../assets/road2.jpg");
 				
 				this.road1.init(trisrun.webgl.scene, trisrun.physic.world);
 				this.road2.init(trisrun.webgl.scene, trisrun.physic.world);	
@@ -61,13 +56,8 @@
 				this.road4.init(trisrun.webgl.scene, trisrun.physic.world);
 				
 				this.wall.init(trisrun.webgl.scene, trisrun.physic.world)
-				
-
-				
-
 			}, 
 			destroy : function(){
-
 				if (this.road1 != null){
 					trisrun.webgl.scene.remove(this.road1.mesh, this.road2.mesh);
 					trisrun.physic.world.remove(this.road1.body, this.road2.body);
@@ -82,18 +72,17 @@
 				this.road3 = null;
 				this.road4 = null;
 				this.wall = null;
-
 			}
 		},
 		patern2:{
 			road1 : null,
 			road2 : null,
-			
 			init : function(){
 				this.obstTbl = [];
 
 				this.road1 = new Road(20,1,1000,0,0,-500,"../assets/road2.jpg");
 				this.road2 = new Road(20,1,1000,0,0,-1600,"../assets/road2.jpg");
+
 				this.wall1= new Road(8,30,1000,-10,2,-500,"../assets/road2.jpg");
 				this.wall2 = new Road(8,30,1000,10,2,-500,"../assets/road2.jpg");
 				
@@ -102,37 +91,23 @@
 					this.zAlea =  Math.floor(Math.random() * -4600/2)+this.z;
 					this.xAlea =  Math.floor(Math.random() * -8)+ Math.floor(Math.random() * 8);
 					if (i === 0){
-						this.obstTbl[i] = new Obst(2,20,20,this.xAlea,2,this.z,"../assets/road2.jpg");
+						this.obstTbl[i] = new Obst(2,20,20,this.xAlea,2,this.z,"../assets/placeholder.jpg");
 						this.obstTbl[i] .init(trisrun.webgl.scene, trisrun.physic.world);
 					}
 					if( i>= 1){
-						this.obstTbl[i] = new Obst(2,20,20,this.xAlea,2,this.zAlea,"../assets/road2.jpg");
+						this.obstTbl[i] = new Obst(2,20,20,this.xAlea,2,this.zAlea,"../assets/placeholder.jpg");
 						this.obstTbl[i] .init(trisrun.webgl.scene, trisrun.physic.world);
 					}
-					
-					
-					
-				
-
-					
 				}
-				
 
-				
 				this.road1.init(trisrun.webgl.scene, trisrun.physic.world);
 				this.road2.init(trisrun.webgl.scene, trisrun.physic.world);
 				this.wall1.init(trisrun.webgl.scene, trisrun.physic.world);
-				this.wall2.init(trisrun.webgl.scene, trisrun.physic.world);
-				
-				
-				
-
-				// 	
+				this.wall2.init(trisrun.webgl.scene, trisrun.physic.world);	
 			},
 			destroy : function(){
 				if (this.road1 != null){
 					for (var i=0; i<trisrun.map.patern2.obstTbl.length; i++){
-						
 						trisrun.physic.world.remove(trisrun.map.patern2.obstTbl[i].body)
 						trisrun.webgl.scene.remove(trisrun.map.patern2.obstTbl[i].mesh)
 					}
@@ -150,7 +125,6 @@
 		patern3 :{
 			roadTbl : null,
 			init : function(){
-				
 				this.roadTbl = [];
 				for (var i = 1 ;i<30; i++){
 					this.z = i*70;
@@ -163,7 +137,6 @@
 						this.roadTbl[i] = new Road(5,1,20,this.xAlea,0,this.zAlea-20,"../assets/road2.jpg");
 					}
 					this.roadTbl[i] .init(trisrun.webgl.scene, trisrun.physic.world);
-					
 				}
 			}, 
 			destroy : function(){
@@ -177,11 +150,8 @@
 				}
 				this.roadTbl = null;
 			}
-		}
-		
+		}	
 	}
-
-
 	var self =map;
 	ctx.map = map;
 })(trisrun);

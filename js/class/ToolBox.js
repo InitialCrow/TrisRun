@@ -6,14 +6,14 @@ function ToolBox(controls, w, h, x,y){
 	this.controls = controls;
 }
 
-ToolBox.prototype.init= function(nb, url, id) {
+ToolBox.prototype.init= function(nb, url, idparent, idchild) {
 	consol(trisrun,"UserInterface :: ok");
 	var div = document.createElement("div");
 	div.style.height = window.innerHeight/1.5 +"px";
 	div.style.width = window.innerWidth/4+"px";
-	div.setAttribute('id',id);
+	div.setAttribute('id',idparent);
 	for (var i = 0; i< nb; i++){
-		div.innerHTML += "<img src="+url+" alt='' class='tool'/>";
+		div.innerHTML += '<img src='+ url+i+'.jpg alt=\'\' class=tool id='+ idchild +i +' />';
 		
 	}
 	document.body.appendChild(div);
@@ -35,4 +35,13 @@ ToolBox.prototype.show= function(id) {
 	
 	
 
+};
+ToolBox.prototype.bordering= function(id) {
+	
+	var elem = document.getElementById(id);
+	elem.className = "border";
+	
+	setTimeout(function(){
+		elem.className = "tool";
+	},2000)
 };
