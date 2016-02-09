@@ -58,6 +58,18 @@
 	animation-duration : 0.5s;
 	animation-iteration-count : 4;
 }
+.help{
+	/*visibility: hidden;*/
+	text-align: center;
+	font-size: 18px;
+	color: black;
+	font-family: verdana;
+	
+}
+#audio{
+	position: absolute;
+	top : 250px;
+}
 
 
 

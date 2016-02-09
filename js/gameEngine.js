@@ -2,6 +2,9 @@
 	var counter = 0; // this is for statement
 	var gameEngine = {
 		initGameEngine : function(){
+			if (localStorage.length>0){
+				this.score.scoreTbl += localStorage.getItem("Scores");
+			}
 			consol(trisrun, "gameEngine :: ok");
 			document.addEventListener('keydown',self.keyboard.keydown, false);
 			document.addEventListener('keyup',self.keyboard.keyup, false);
@@ -21,9 +24,16 @@
 		
 		},
 		gameOver : function(){
-			// document.location ='trisrun.html';
+			cancelAnimationFrame(trisrun.req);
+			
+			localStorage.setItem("Scores", this.score.data +" m");
+			this.score.scoreTbl += localStorage.getItem('Scores') +"|";
+			localStorage.setItem("Scores", this.score.scoreTbl );
+			
+			document.location ='lose.html';
 		},
 		score : {
+			scoreTbl :[],
 			data : 0,
 			text : null,
 			displayScore : function(){
@@ -40,7 +50,8 @@
 			updateScore : function(){
 				this.data ++;
 				this.text.innerHTML = this.data +"m";
-			}
+			},
+			
 		},
 		feedbacks : {
 			init : function(){

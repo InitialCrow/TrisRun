@@ -7,7 +7,7 @@ function ToolBox(controls, w, h, x,y){
 }
 
 ToolBox.prototype.init= function(nb, url, idparent, idchild) {
-	consol(trisrun,"UserInterface :: ok");
+	
 	var div = document.createElement("div");
 	div.style.height = window.innerHeight/1.5 +"px";
 	div.style.width = window.innerWidth/4+"px";

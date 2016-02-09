@@ -42,8 +42,5 @@ Road.prototype.init = function(scene, world) {
 				console.log( 'An error happened' );
 			}
 		);
-		consol(trisrun,"map > road :: ok");	
+			
 };
-Road.prototype.grp = function(id) {
-	this.body.grp = id;
-}

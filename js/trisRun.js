@@ -1,6 +1,6 @@
 (function(ctx){
 	var trisrun = {
-		config : { debug : true},
+		config : { debug : false},
 		init : function(){
 			this.webgl.initWebgl();
 			this.physic.initPhysic();
@@ -16,7 +16,7 @@
 			this.update();
 		},
 		update : function(){
-			requestAnimationFrame(trisrun.update);
+			trisrun.req = requestAnimationFrame(trisrun.update);
 			//------------------------- with debug-----------------
 			
 			if (trisrun.config.debug === true){

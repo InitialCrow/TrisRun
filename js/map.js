@@ -48,7 +48,7 @@
 				this.road2 = new Road(20,1,1000,0,0,-1600,"../assets/road2.jpg");
 				this.road3 = new Road(20,1,1000,0,-20,-2600,"../assets/road2.jpg");
 				this.road4 = new Road(20,1,1000,0,-20,-3700,"../assets/road2.jpg");
-				this.wall = new Road(20,30,20,0,5,-2200,"../assets/road2.jpg");
+				this.wall = new Obst(20,30,20,0,5,-2200,"../assets/road2.jpg");
 				
 				this.road1.init(trisrun.webgl.scene, trisrun.physic.world);
 				this.road2.init(trisrun.webgl.scene, trisrun.physic.world);	
@@ -88,7 +88,7 @@
 				
 				for (var i = 0 ;i<15; i++){
 					this.z = -700;
-					this.zAlea =  Math.floor(Math.random() * -4600/2)+this.z;
+					this.zAlea =  Math.floor(Math.random() * -4800/2)+this.z;
 					this.xAlea =  Math.floor(Math.random() * -8)+ Math.floor(Math.random() * 8);
 					if (i === 0){
 						this.obstTbl[i] = new Obst(2,20,20,this.xAlea,2,this.z,"../assets/placeholder.jpg");

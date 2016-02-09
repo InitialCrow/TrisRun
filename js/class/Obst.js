@@ -15,8 +15,8 @@ Obst.prototype.init = function(scene, world) {
 			self.material = new THREE.MeshBasicMaterial({map:image});
      			self.mesh = new THREE.Mesh(self.geometry, self.material);
      			self.mesh.position.set(self.x,self.y,self.z);
-     			// image.wrapS = THREE.RepeatWrapping;
-     			// image.wrapT = THREE.RepeatWrapping;
+     			image.wrapS = THREE.RepeatWrapping;
+     			image.wrapT = THREE.RepeatWrapping;
      			image.repeat.set( 1, 25 );
  			self.shape = new CANNON.Box(new CANNON.Vec3(self.w/2,self.h/2, self.d/2));
 			self.body = new CANNON.Body({ mass: 0, type : CANNON.Body.KINEMATIC  });
@@ -41,6 +41,6 @@ Obst.prototype.init = function(scene, world) {
 			}
 
 		);
-		consol(trisrun,"map > obst :: ok");
+		
 		
 };

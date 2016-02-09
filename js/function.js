@@ -35,6 +35,8 @@ function debugTool(obj, obj2){
 // sync position of geometry and body
 function initPos(obj, objBody){
 	objBody.position = obj.position;
+	
+	 
 }
 
 // physic
